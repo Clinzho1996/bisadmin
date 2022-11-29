@@ -8,31 +8,27 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
   PermissionsAndroid,
-  Linking,
-  Platform,
   FlatList,
   ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  Alert,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import {Menu} from 'react-native-paper';
+import {Menu, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Modal, Portal, Button, Provider} from 'react-native-paper';
-import {ScrollView} from 'react-native-gesture-handler';
-import MapView, {
-  PROVIDER,
-  Marker,
-  Polyline,
-  Callout,
-  Circle,
-} from 'react-native-maps';
+import {Modal, Portal} from 'react-native-paper';
+import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import ajax from '../api/FetchUsers';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 // Function to get permission for location
 const requestLocationPermission = async () => {
@@ -61,17 +57,27 @@ const requestLocationPermission = async () => {
 };
 
 const Home = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   const [visible, setVisible] = React.useState(false);
   const [visibleTwo, setVisibleTwo] = React.useState(false);
   const [visibleThree, setVisibleThree] = React.useState(false);
+  const [visibleFour, setVisibleFour] = React.useState(false);
   const openMenu = () => setVisible(true);
 
   const closeMenu = () => setVisible(false);
 
-  const showModal = () => setVisibleTwo(true);
+  const showModal = () => setVisibleTwo(!visibleTwo);
   const hideModal = () => setVisibleTwo(false);
   const showModalThree = () => setVisibleThree(true);
   const hideModalThree = () => setVisibleThree(false);
+  const showModalFour = () => setVisibleFour(true);
+  const hideModalFour = () => setVisibleFour(false);
   const containerStyle = {
     backgroundColor: 'white',
     padding: 20,
@@ -100,7 +106,10 @@ const Home = ({navigation}) => {
 
   // define state variables
   const [listData, setListData] = useState([]);
+  const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [isLoadingTwo, setLoadingTwo] = useState(true);
+
   const getData = () => {
     return fetch('https://hiousapp.com/api/admin/fetch_users.php')
       .then(response => response.json())
@@ -185,6 +194,17 @@ const Home = ({navigation}) => {
                           padding: 5,
                           color: '#000',
                         }}>
+                        Employee ID: {item.id}
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          fontSize: 16,
+                          padding: 5,
+                          color: '#000',
+                        }}>
                         Login Time: {item.loggedin_time}
                       </Text>
                     </View>
@@ -221,30 +241,32 @@ const Home = ({navigation}) => {
                         Current Location: {item.loggedin_location}
                       </Text>
                     </View>
-                    {/* <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                      alignItems: 'center',
-                    }}>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: '#3E90FC',
-                        padding: 10,
-                        borderRadius: 10,
-                      }}>
-                      <Text style={{color: '#fff'}}>Show History</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        backgroundColor: 'red',
-                        padding: 10,
-                        borderRadius: 10,
-                      }}>
-                      <Text style={{color: '#fff'}}>Delete History</Text>
-                    </TouchableOpacity>
-                  </View> */}
+                    <View>
+                      <TouchableOpacity
+                        style={{
+                          backgroundColor: '#3E90FC',
+                          paddingHorizontal: 10,
+                          paddingVertical: 10,
+                          borderRadius: 10,
+                          marginHorizontal: 20,
+                          marginVertical: 10,
+                        }}
+                        key={item.id}
+                        onPress={() => {
+                          navigation.navigate('FetchHistory');
+                          showModal();
+                        }}>
+                        <Text
+                          style={{
+                            textAlign: 'center',
+                            fontSize: 16,
+                            padding: 5,
+                            color: '#fff',
+                          }}>
+                          Show Employee History
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 )}
                 keyExtractor={item => item.id}
@@ -286,96 +308,115 @@ const Home = ({navigation}) => {
           </Text>
         </Modal>
       </Portal>
-
-      <View
-        style={{
-          backgroundColor: '#3E90FC',
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            size="large"
+            color="#3E90FC"
+          />
+        }>
         <View
           style={{
+            backgroundColor: '#3E90FC',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>
-          <Icon name="person-circle-outline" size={40} color="yellow" />
-          <Text style={{color: '#fff', fontSize: 20, fontWeight: '600'}}>
-            BIS - Admin
-          </Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Icon name="person-circle-outline" size={40} color="yellow" />
+            <Text style={{color: '#fff', fontSize: 20, fontWeight: '600'}}>
+              BIS - Admin
+            </Text>
+          </View>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            onPress={openMenu}
+            transparent={true}
+            anchor={
+              <TouchableOpacity onPress={openMenu}>
+                <Icon
+                  name="ellipsis-vertical-outline"
+                  size={30}
+                  color={'#FFF'}
+                />
+              </TouchableOpacity>
+            }
+            style={{paddingTop: 40}}>
+            <Menu.Item
+              title="Normal Map"
+              style={{fontSize: 14, color: '#5C5C5C'}}
+            />
+            <Menu.Item
+              title="Register Employee"
+              style={{fontSize: 14, color: '#5C5C5C'}}
+              onPress={() => navigation.navigate('SignUp')}
+            />
+            <Menu.Item
+              title="Log out"
+              style={{fontSize: 14, color: '#5C5C5C'}}
+              onPress={() => navigation.navigate('Login')}
+            />
+          </Menu>
         </View>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          onPress={openMenu}
-          transparent={true}
-          anchor={
-            <TouchableOpacity onPress={openMenu}>
-              <Icon name="ellipsis-vertical-outline" size={30} color={'#FFF'} />
-            </TouchableOpacity>
-          }
-          style={{paddingTop: 40}}>
-          <Menu.Item
-            title="Normal Map"
-            style={{fontSize: 14, color: '#5C5C5C'}}
-          />
-          <Menu.Item
-            title="Log out"
-            style={{fontSize: 14, color: '#5C5C5C'}}
-            onPress={() => navigation.navigate('Login')}
-          />
-        </Menu>
-      </View>
-      <View style={{height: windowHeight}}>
-        <MapView
-          style={styles.map}
-          region={position}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          followsUserLocation={true}
-          showsCompass={true}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          pitchEnabled={true}
-          showsBuildings={true}
-          showsTraffic={true}
-          showsIndoors={true}
-          rotateEnabled={true}
-          showsIndoorLevelPicker={true}>
-          <Marker
-            draggable
-            coordinate={position}
-            // eslint-disable-next-line no-alert
-            onDragEnd={e => alert(JSON.stringify(e.nativeEvent.coordinate))}
-            title={'BIS Admin'}
-            description={'You are currently here'}
-          />
-        </MapView>
-      </View>
-      <View style={styles.tab}>
-        <TouchableOpacity
-          style={{flexDirection: 'row', alignItems: 'center'}}
-          onPress={showModal}>
-          <Icon name="refresh-outline" color="yellow" size={25} />
-          <Text style={{color: 'yellow', fontSize: 14}}>Empl. History</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.local}
-          onPress={requestLocationPermission}>
-          <Icon name="location" size={30} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{flexDirection: 'row', alignItems: 'center'}}
-          onPress={showModalThree}>
-          <Icon name="information-circle-outline" color="#fff" size={25} />
-          <Text style={{color: '#fff', fontSize: 14}}>instructions</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={{height: windowHeight}}>
+          <MapView
+            style={styles.map}
+            region={position}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            followsUserLocation={true}
+            showsCompass={true}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            pitchEnabled={true}
+            showsBuildings={true}
+            showsTraffic={true}
+            showsIndoors={true}
+            rotateEnabled={true}
+            showsIndoorLevelPicker={true}>
+            <Marker
+              draggable
+              coordinate={position}
+              // eslint-disable-next-line no-alert
+              onDragEnd={e => alert(JSON.stringify(e.nativeEvent.coordinate))}
+              title={'BIS Admin'}
+              description={'You are currently here'}
+            />
+          </MapView>
+        </View>
+        <View style={styles.tab}>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center'}}
+            onPress={showModal}>
+            <Icon name="refresh-outline" color="yellow" size={25} />
+            <Text style={{color: 'yellow', fontSize: 14}}>Empl. History</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.local}
+            onPress={requestLocationPermission}>
+            <Icon name="location" size={30} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center'}}
+            onPress={showModalThree}>
+            <Icon name="information-circle-outline" color="#fff" size={25} />
+            <Text style={{color: '#fff', fontSize: 14}}>instructions</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

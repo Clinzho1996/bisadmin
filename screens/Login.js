@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable eqeqeq */
+/* eslint-disable quotes */
 
 import {
   StyleSheet,
@@ -44,13 +46,6 @@ const Login = ({navigation}) => {
       if (!isValidLength.test(value)) {
         return 'Password must be 8-16 Characters Long.';
       }
-
-      // const isContainsSymbol =
-      //   /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/;
-      // if (!isContainsSymbol.test(value)) {
-      //   return 'Password must contain at least one Special Symbol.';
-      // }
-
       return null;
     };
 
@@ -67,7 +62,7 @@ const Login = ({navigation}) => {
             navigation.replace('Home');
           } else {
             console.log(result.data);
-            Alert.alert("Warning", result.data.message);
+            Alert.alert('Warning', result.data.message);
           }
         })
         .catch(error => {
@@ -77,9 +72,9 @@ const Login = ({navigation}) => {
   }
   return (
     <ImageBackground
-      source={require('../assets/bg.jpg')}
+      source={require('../assets/launch_screen.png')}
       style={styles.container}
-      imageStyle={{opacity: 0.4}}>
+      imageStyle={{opacity: 1}}>
       <View style={styles.containerTwo}>
         {loading ? (
           <ActivityIndicator
@@ -97,6 +92,7 @@ const Login = ({navigation}) => {
                 paddingHorizontal: 0,
                 paddingVertical: 20,
                 flexDirection: 'row',
+                marginTop: -50,
               }}>
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Icon name="arrow-back" size={30} color={'#3E90FC'} />
@@ -113,8 +109,7 @@ const Login = ({navigation}) => {
                 style={{
                   width: 100,
                   height: 100,
-                  marginTop: 30,
-                  opacity: 0.8,
+                  marginTop: 0,
                   alignItems: 'center',
                   textAlign: 'center',
                   justifyContent: 'center',
@@ -126,7 +121,7 @@ const Login = ({navigation}) => {
             <View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -156,7 +151,7 @@ const Login = ({navigation}) => {
               <View>
                 <View
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7f7f7',
                     paddingHorizontal: 0,
                     paddingVertical: 0,
                     paddingBottom: 10,
@@ -228,29 +223,6 @@ const Login = ({navigation}) => {
                     <Text style={styles.btnText}>Register as Admin</Text>
                   </TouchableOpacity>
                   {/* <Text>{resultData}</Text> */}
-                </View>
-                <View
-                  style={{
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    marginTop: 10,
-                  }}>
-                  <Text
-                    style={{color: '#828282', fontSize: 16, marginRight: 10}}>
-                    Want to register an employee ?
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('SignUp')}>
-                    <Text
-                      style={{
-                        fontWeight: '600',
-                        fontSize: 16,
-                        color: '#3E90FC',
-                      }}>
-                      Register
-                    </Text>
-                  </TouchableOpacity>
                 </View>
               </View>
             </View>

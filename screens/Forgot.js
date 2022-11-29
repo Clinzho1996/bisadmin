@@ -15,7 +15,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -65,9 +65,9 @@ const Forgot = ({navigation}) => {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null}>
       <ScrollView>
         <ImageBackground
-          source={require('../assets/bg.jpg')}
+          source={require('../assets/launch_screen.png')}
           style={styles.container}
-          imageStyle={{opacity: 0.4}}>
+          imageStyle={{opacity: 1}}>
           <View
             style={{
               paddingHorizontal: 0,
@@ -102,7 +102,6 @@ const Forgot = ({navigation}) => {
                       width: 100,
                       height: 100,
                       marginTop: 30,
-                      opacity: 0.8,
                       alignItems: 'center',
                       textAlign: 'center',
                       justifyContent: 'center',
@@ -113,7 +112,7 @@ const Forgot = ({navigation}) => {
                 <View>
                   <View
                     style={{
-                      backgroundColor: '#fff',
+                      backgroundColor: '#f7f7f7',
                       paddingHorizontal: 0,
                       paddingVertical: 0,
                       paddingBottom: 10,

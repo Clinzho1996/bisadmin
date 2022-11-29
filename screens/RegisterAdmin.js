@@ -64,9 +64,9 @@ const RegisterAdmin = ({navigation}) => {
 
   return (
     <ImageBackground
-      source={require('../assets/bg.jpg')}
+      source={require('../assets/launch_screen.png')}
       style={styles.container}
-      imageStyle={{opacity: 0.4}}>
+      imageStyle={{opacity: 1}}>
       <View style={styles.containerTwo}>
         {loading ? (
           <ActivityIndicator
@@ -103,7 +103,6 @@ const RegisterAdmin = ({navigation}) => {
                   width: 70,
                   height: 70,
                   marginTop: 0,
-                  opacity: 0.8,
                   alignItems: 'center',
                   textAlign: 'center',
                   justifyContent: 'center',
@@ -114,7 +113,7 @@ const RegisterAdmin = ({navigation}) => {
             <View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -144,7 +143,7 @@ const RegisterAdmin = ({navigation}) => {
               <View>
                 <View
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7f7f7',
                     paddingHorizontal: 0,
                     paddingVertical: 0,
                     paddingBottom: 10,
@@ -190,7 +189,7 @@ const RegisterAdmin = ({navigation}) => {
                 </View>
                 <View
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7f7f7',
                     paddingHorizontal: 0,
                     paddingVertical: 0,
                     paddingBottom: 10,

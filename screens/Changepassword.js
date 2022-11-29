@@ -63,11 +63,12 @@ const Changepassword = ({navigation}) => {
         console.log(error);
       });
   }
+
   return (
     <ImageBackground
-      source={require('../assets/bg.jpg')}
+      source={require('../assets/launch_screen.png')}
       style={styles.container}
-      imageStyle={{opacity: 0.4}}>
+      imageStyle={{opacity: 1}}>
       <View
         style={{
           paddingHorizontal: 0,
@@ -102,14 +103,19 @@ const Changepassword = ({navigation}) => {
                   width: 100,
                   height: 100,
                   marginTop: 30,
-                  opacity: 0.8,
                   alignItems: 'center',
                   textAlign: 'center',
                   justifyContent: 'center',
                 }}
               />
             </View>
-            <Text style={{fontSize: 28, color: '#7A86C0', fontWeight: '600'}}>
+            <Text
+              style={{
+                fontSize: 28,
+                color: '#7A86C0',
+                fontWeight: '600',
+                textAlign: 'center',
+              }}>
               New Password
             </Text>
             <Text
@@ -118,13 +124,14 @@ const Changepassword = ({navigation}) => {
                 fontSize: 16,
                 lineHeight: 24,
                 color: '#828282',
+                textAlign: 'center',
               }}>
               Your new password must be different {'\n'} from the old one
             </Text>
             <View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -154,7 +161,7 @@ const Changepassword = ({navigation}) => {
               </View>
               <View
                 style={{
-                  backgroundColor: '#Fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,

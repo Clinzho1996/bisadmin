@@ -66,9 +66,9 @@ const SignUp = ({navigation}) => {
 
   return (
     <ImageBackground
-      source={require('../assets/bg.jpg')}
+      source={require('../assets/launch_screen.png')}
       style={styles.container}
-      imageStyle={{opacity: 0.4}}>
+      imageStyle={{opacity: 1}}>
       <View style={styles.containerTwo}>
         {loading ? (
           <ActivityIndicator
@@ -105,7 +105,6 @@ const SignUp = ({navigation}) => {
                   width: 70,
                   height: 70,
                   marginTop: 0,
-                  opacity: 0.8,
                   alignItems: 'center',
                   textAlign: 'center',
                   justifyContent: 'center',
@@ -116,7 +115,7 @@ const SignUp = ({navigation}) => {
             <View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -145,7 +144,7 @@ const SignUp = ({navigation}) => {
               </View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -175,7 +174,7 @@ const SignUp = ({navigation}) => {
               </View>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#f7f7f7',
                   paddingHorizontal: 0,
                   paddingVertical: 0,
                   paddingBottom: 10,
@@ -205,7 +204,7 @@ const SignUp = ({navigation}) => {
               <View>
                 <View
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7f7f7',
                     paddingHorizontal: 0,
                     paddingVertical: 0,
                     paddingBottom: 10,
@@ -251,7 +250,7 @@ const SignUp = ({navigation}) => {
                 </View>
                 <View
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7f7f7',
                     paddingHorizontal: 0,
                     paddingVertical: 0,
                     paddingBottom: 10,
@@ -300,29 +299,6 @@ const SignUp = ({navigation}) => {
                     <Text style={styles.btnText}>Create Employee Account</Text>
                   </TouchableOpacity>
                   {/* <Text>{resultData}</Text> */}
-                </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    marginTop: 10,
-                    justifyContent: 'flex-end',
-                  }}>
-                  <Text
-                    style={{color: '#828282', fontSize: 16, marginRight: 10}}>
-                    Login as Admin ?
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}>
-                    <Text
-                      style={{
-                        fontWeight: '600',
-                        fontSize: 16,
-                        color: '#3E90FC',
-                      }}>
-                      Login
-                    </Text>
-                  </TouchableOpacity>
                 </View>
               </View>
             </View>

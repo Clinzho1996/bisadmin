@@ -60,8 +60,8 @@ const Reset = ({navigation}) => {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null}>
       <ScrollView>
         <ImageBackground
-          source={require('../assets/bg.jpg')}
-          imageStyle={{opacity: 0.4}}
+          source={require('../assets/launch_screen.png')}
+          imageStyle={{opacity: 1}}
           style={styles.container}>
           <View
             style={{
@@ -99,7 +99,6 @@ const Reset = ({navigation}) => {
                       width: 100,
                       height: 100,
                       marginTop: 30,
-                      opacity: 0.8,
                       alignItems: 'center',
                       textAlign: 'center',
                       justifyContent: 'center',
@@ -128,7 +127,7 @@ const Reset = ({navigation}) => {
                 <View>
                   <View
                     style={{
-                      backgroundColor: '#fff',
+                      backgroundColor: '#f7f7f7',
                       paddingHorizontal: 0,
                       paddingVertical: 0,
                       paddingBottom: 10,

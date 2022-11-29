@@ -20,7 +20,7 @@ const Onboarding = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       handleGetToken();
-    }, 1000);
+    }, 3000);
   });
 
   const handleGetToken = async () => {
@@ -33,30 +33,9 @@ const Onboarding = ({navigation}) => {
   };
   return (
     <ImageBackground
-      source={require('../assets/bg.jpg')}
+      source={require('../assets/bg.png')}
       style={styles.container}
-      imageStyle={{opacity: 0.4}}>
-      <Text style={styles.text}>BIS Employee Tracker App</Text>
-      <View>
-        <Image source={require('../assets/route.png')} style={styles.img} />
-      </View>
-      <View>
-        <TouchableOpacity style={styles.btnLogin}>
-          <Text
-            style={styles.btnText}
-            onPress={() => navigation.navigate('Login')}>
-            Login as Admin
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRegister}>
-          <Text
-            style={styles.btnTextRegister}
-            onPress={() => navigation.navigate('SignUp')}>
-            Register Employee
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+      imageStyle={{opacity: 1}}></ImageBackground>
   );
 };
 
@@ -71,6 +50,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 50,
     resizeMode: 'cover',
+    width: width,
   },
   text: {
     fontSize: 24,
